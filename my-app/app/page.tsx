@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { useRouter } from 'next/router';
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -10,11 +9,10 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 
-function samePageLinkNavigation(event) {
+function samePageLinkNavigation(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,) {
   if (
       event.defaultPrevented ||
       event.button !== 0 || // ignore everything but left-click
@@ -28,11 +26,17 @@ function samePageLinkNavigation(event) {
   return true;
 }
 
-function LinkTab(props) {
+interface LinkTabProps {
+  label?: string;
+  href?: string;
+  selected?: boolean;
+}
+
+function LinkTab(props: LinkTabProps) {
   return (
       <Tab
           component="a"
-          onClick={(event) => {
+          onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
             // Routing libraries handle this, you can remove the onClick handle when using them.
             if (samePageLinkNavigation(event)) {
               event.preventDefault();
@@ -44,32 +48,30 @@ function LinkTab(props) {
   );
 }
 
-LinkTab.propTypes = {
-  selected: PropTypes.bool,
-};
-
 
 export default function Home() {
   const router = useRouter();
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     // event.type can be equal to focus with selectionFollowsFocus.
     if (
         event.type !== 'click' ||
-        (event.type === 'click' && samePageLinkNavigation(event))
+        (event.type === 'click' &&
+            samePageLinkNavigation(
+                event as React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+            ))
     ) {
       setValue(newValue);
     }
+  };
 
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-    const handleClose = () => {
-      setOpen(false);
-    };
-
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -96,7 +98,7 @@ export default function Home() {
               onClose={handleClose}
               PaperProps={{
                 component: 'form',
-                onSubmit: (event) => {
+                onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
                   event.preventDefault();
                   const formData = new FormData(event.currentTarget);
                   const formJson = Object.fromEntries(formData.entries());
