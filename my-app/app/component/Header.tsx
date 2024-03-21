@@ -13,6 +13,7 @@ export const Header = () => {
                 <span>
                     Secure Share
                 </span>
+                
             </div>
             <Stack spacing={2} direction="row">
                 <Link href={"/chiffrement"}>CHIFFREMENT</Link>
