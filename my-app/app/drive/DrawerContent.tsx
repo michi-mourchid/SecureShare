@@ -13,6 +13,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 const drawerWidth = 240;
 
@@ -32,27 +34,34 @@ export default function PermanentDrawerLeft() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
+            backgroundColor: 'transparent'
           },
         }}
         variant="permanent"
         anchor="left"
       >
+        
+      <div style={{ position: 'absolute', top: '90px', bottom: 0, left: 0, right: 0, backgroundColor: '#2D446D', color: 'white'}}>
         <Toolbar />
-        <Divider />
-        <List>
-          {['Photos de vacances', 'Comptabilité', 'Cours EPF', 'Document Notaire'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <MailIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-    </Drawer>
-      
+          <List>
+            {['Photos de vacances', 'Comptabilité', 'Cours EPF', 'Document Notaire'].map((text, index) => (
+              <ListItem key={text} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    {index % 2 === 0 ? <MailIcon /> : <MailIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <div style={{ position: 'absolute', bottom: '10px', left: '10px' }}>
+          <Fab size="small" color="secondary" aria-label="add">
+            <AddIcon />
+          </Fab>
+          </div> 
+      </div>  
+      </Drawer>
     </Box>
   );
 }
